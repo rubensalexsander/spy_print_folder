@@ -61,9 +61,12 @@ def main():
     printer_num = 2
     #------------------------------------------------
 
-    print('### Spy Print Folder RUNNING ###\n')
-    print(f'Path spy setted: {spy_folder}')
-    print(f'Printer setted: {printer_num}\n')
+    def print_settings():
+        print('### Spy Print Folder RUNNING ###\n')
+        print(f'Path spy setted: {spy_folder}')
+        print(f'Printer setted: {printer_num}\n')
+    
+    print_settings()
 
     path_lookout = PathLookOut(spy_folder)
     printer = PyPrinter(printer_num)
@@ -74,6 +77,8 @@ def main():
 
         if resp:
             printer.new_print(spy_folder, resp)
+
+            print_settings()
 
 if __name__ == '__main__':
     main()
