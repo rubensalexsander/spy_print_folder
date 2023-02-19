@@ -63,34 +63,40 @@ running = True
 def main():
     global running
 
-    #------------------------------------------------
+    # Configs ---------------------------------------
     spy_folder = r'C:\Users\Admin\Meu Drive (crucilandiapmmg@gmail.com)\imprimir'
     printer_num = 2
     #------------------------------------------------
+
+    path_lookout = PathLookOut(spy_folder)
+    printer = PyPrinter(printer_num)
 
     def print_settings():
         print('### Spy Print Folder RUNNING ###\n')
         print(f'Path spy setted: {spy_folder}')
         print(f'Printer setted: {printer_num}\n')
-    
     print_settings()
 
+    # Front sets ------------------------------------
     root = Tk()
     root.title("Imprimir")
-    root.geometry("200x100")
-    root.minsize(200, 100) 
-    root.maxsize(200, 100)
-    path_lookout = PathLookOut(spy_folder)
-    printer = PyPrinter(printer_num)
+    geometry = (350, 200)
+    root.minsize(geometry[0], geometry[1]), root.maxsize(geometry[0], geometry[1]) 
 
     frm = ttk.Frame(root, padding=10)
-    frm.pack(side=TOP)
+    frm.pack(side=TOP, fill=X)
+
+    label_path = ttk.Label(frm, text='Local: \n'+spy_folder, font=("Arial", 8))
+    label_path.pack(side=TOP, anchor='w', pady=5)
+
+    label_printer = ttk.Label(frm, text='Impressora: \n'+str(printer.printer_name), font=("Arial", 8))
+    label_printer.pack(side=TOP, anchor='w', pady=5)
 
     label_state_var = StringVar()
     label_state_var.set(f'Running: {monitoring}')
 
-    label_state = ttk.Label(frm, textvariable=label_state_var)
-    label_state.pack(side=TOP)
+    label_state = ttk.Label(frm, textvariable=label_state_var, padding=2)
+    label_state.pack(side=TOP, pady=10)
 
     def change_state():
         global monitoring
@@ -105,7 +111,7 @@ def main():
             label_state.config(background='green')
             print('Started\n')
 
-        label_state_var.set(f'Running: {monitoring}')
+        label_state_var.set(f'Monitoring: {monitoring}')
 
     bt_state = ttk.Button(command=change_state)
     bt_state.pack()
@@ -117,6 +123,7 @@ def main():
 
     bt_quit = ttk.Button(text='Sair', command=quit)
     bt_quit.pack()
+    #------------------------------------------------
 
     change_state()
     change_state()
